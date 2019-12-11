@@ -1,21 +1,22 @@
 .edition {
     padding-top: 1%;
+    padding-bottom: 2%;
     border-radius: 10px;
-    width: 300px;
+    width: 400px;
     height: auto;
     text-align: center;
     position: fixed;
-    top: 300px;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: white;
     border: 1px solid black;
-
     &__form {
-        margin: 20px;
-
         &-field {
-            margin: 2px;
+            padding-bottom: 15px;
+            &-name {
+                padding-bottom: 25px;
+            }
         }
     }
 
@@ -25,10 +26,21 @@
     }
 }
 
-.warning {
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 3px 3px 3px 3px;
-    color: #D8000C;
-    background-color: #FFBABA;
+input {
+    display: inline-block;
+    width: 300px;
 }
+
+.warning {
+    margin-top: 3px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #cc0033;
+    background-color: #fce4e4;
+    border: 1px solid #fcc2c3;
+    border-radius: 5px;
+    position: absolute;
+    width: 388px;
+    padding: 5px;
+}
+

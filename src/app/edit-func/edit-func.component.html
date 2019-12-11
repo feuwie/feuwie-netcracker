@@ -1,52 +1,53 @@
 <div class="edition" *ngIf="hideEdition()">
         <p class="edition__confirm">Редактирование студента</p>
-        <form class="edition__form" [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+        <form class="edition__form" [formGroup]="studentForm" (ngSubmit)="onSubmit(studentForm)">
             <div formGroupName="fullName">
                 <div class="edition__form-field">
-                    <label for="sname">Фамилия </label>
+                    <label for="sname">Фамилия<br></label>
                     <input type="text" id="sname" formControlName="sname" />
                     <div class="warning" *ngIf="studentValidator('sname')">
-                        Ошибка! <br> Фамилия должно начинаться с большой буквы, и состоять из русских букв.
+                        Фамилия должно начинаться с большой буквы, и состоять из русских букв.
                     </div>
                 </div>
                 <br>
-                <div class="edition__form-field">
-                    <label for="fname">Имя </label>
+                <div class="edition__form-field-name">
+                    <label for="fname">Имя<br></label>
                     <input type="text" id="fname" formControlName="fname" />
                     <div class="warning" *ngIf="studentValidator('fname')">
-                        Ошибка! <br> Имя должно начинаться с большой буквы, состоять из русских букв и не совпадать с
+                        Имя должно начинаться с большой буквы, состоять из русских букв и не совпадать с
                         Фамилией и Отчеством.
                     </div>
                 </div>
                 <br>
                 <div class="edition__form-field">
-                    <label for="mname">Отчество </label>
+                    <label for="mname">Отчество<br></label>
                     <input type="text" id="mname" formControlName="mname" />
                     <div class="warning" *ngIf="studentValidator('mname')">
-                        Ошибка! <br> Отчество должно начинаться с большой буквы, и состоять из русских букв.
+                        Отчество должно начинаться с большой буквы, и состоять из русских букв.
                     </div>
                 </div>
             </div>
             <br>
             <div class="edition__form-field">
-                <label for="dob">Дата рождения </label>
-                <input type="text" id="dob" formControlName="dob" />
+                <label for="dob">Дата рождения<br></label>
+                <input type="date" id="dob" formControlName="dob" />
                 <div class="warning" *ngIf="studentValidator('dob')">
-                    Ошибка! <br> Дата рождения не должна отличаться от текущей больше чем на 10 лет, должна быть валидной и
-                    быть
-                    в формате мм/дд/гггг.
+                    Дата рождения не должна отличаться от текущей больше чем на 10 лет и должна быть валидной.
                 </div>
             </div>
             <br>
             <div class="edition__form-field">
-                <label for="score">Средний балл </label>
+                <label for="score">Средний балл<br></label>
                 <input type="text" id="score" formControlName="score" />
                 <div class="warning" *ngIf="studentValidator('score')">
-                    Ошибка! <br> Средний бал должен быть в пределах от 1 до 5.
+                    Средний бал должен быть в пределах от 1 до 5.
                 </div>
             </div>
             <br>
             <button type="submit">Отредактировать</button>
             <button (click)="cancel()">Отмена</button>
+            <div class="warning" *ngIf="errorSubmit">
+                Поля не заполнены или есть ошибки!
+            </div>
         </form>
     </div>
