@@ -1,0 +1,52 @@
+<div class="addition" *ngIf="hideAddition()">
+    <p class="addition__confirm">Добавление студента</p>
+    <form class="addition__form" [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+        <div formGroupName="fullName">
+            <div class="addition__form-field">
+                <label for="sname">Фамилия </label>
+                <input type="text" id="sname" formControlName="sname" />
+                <div class="warning" *ngIf="studentValidator('sname')">
+                    Ошибка! <br> Фамилия должно начинаться с большой буквы, и состоять из русских букв.
+                </div>
+            </div>
+            <br>
+            <div class="addition__form-field">
+                <label for="fname">Имя </label>
+                <input type="text" id="fname" formControlName="fname" />
+                <div class="warning" *ngIf="studentValidator('fname')">
+                    Ошибка! <br> Имя должно начинаться с большой буквы, состоять из русских букв и не совпадать с
+                    Фамилией и Отчеством.
+                </div>
+            </div>
+            <br>
+            <div class="addition__form-field">
+                <label for="mname">Отчество </label>
+                <input type="text" id="mname" formControlName="mname" />
+                <div class="warning" *ngIf="studentValidator('mname')">
+                    Ошибка! <br> Отчество должно начинаться с большой буквы, и состоять из русских букв.
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="addition__form-field">
+            <label for="dob">Дата рождения </label>
+            <input type="text" id="dob" formControlName="dob" />
+            <div class="warning" *ngIf="studentValidator('dob')">
+                Ошибка! <br> Дата рождения не должна отличаться от текущей больше чем на 10 лет, должна быть валидной и
+                быть
+                в формате мм/дд/гггг.
+            </div>
+        </div>
+        <br>
+        <div class="addition__form-field">
+            <label for="score">Средний балл </label>
+            <input type="text" id="score" formControlName="score" />
+            <div class="warning" *ngIf="studentValidator('score')">
+                Ошибка! <br> Средний бал должен быть в пределах от 1 до 5.
+            </div>
+        </div>
+        <br>
+        <button type="submit">Добавить</button>
+        <button (click)="cancel()">Отмена</button>
+    </form>
+</div>
