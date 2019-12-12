@@ -13,26 +13,31 @@ export class EditFuncComponent extends AppComponent implements OnInit, DoCheck {
     errorSubmit = false;
 
     ngOnInit(): void {
-        this.studForm();
-    }
-
-    studForm(): void {
-        if (AppComponent.formEdit && !this.isWrite) {
-            this.isWrite = 1;
-            this.studentForm = new FormGroup({
-                fullName: new FormGroup({
-                    sname: new FormControl(AppComponent.initialEditedStudent.sname, [Validators.required, Validators.pattern(/^[А-Я].*$/)]),
-                    fname: new FormControl(AppComponent.initialEditedStudent.fname, [Validators.required, Validators.pattern(/^[А-Я].*$/), this.nameValidator]),
-                    mname: new FormControl(AppComponent.initialEditedStudent.mname, [Validators.required, Validators.pattern(/^[А-Я].*$/)]),
-                }),
-                dob: new FormControl(this.formatDate(), [Validators.required, this.dateValidator]),
-                score: new FormControl(AppComponent.initialEditedStudent.score, [Validators.required, Validators.pattern("(5|([1-4]+(.[1-9])?))")])
-            });
-        }
+        this.studentForm = new FormGroup({
+            fullName: new FormGroup({
+                sname: new FormControl("", [Validators.required, Validators.pattern(/^[А-Я].*$/)]),
+                fname: new FormControl("", [Validators.required, Validators.pattern(/^[А-Я].*$/), this.nameValidator]),
+                mname: new FormControl("", [Validators.required, Validators.pattern(/^[А-Я].*$/)]),
+            }),
+            dob: new FormControl("", [Validators.required, this.dateValidator]),
+            score: new FormControl("", [Validators.required, Validators.pattern("(5|([1-4]+(.[1-9])?))")])
+        });
     }
 
     ngDoCheck(): void {
-        this.studForm();
+        console.log('hui');
+        if (AppComponent.formEdit && !this.isWrite) {
+            this.isWrite = 1;
+            this.studentForm.setValue({
+                fullName: {
+                    sname: AppComponent.initialEditedStudent.sname,
+                    fname: AppComponent.initialEditedStudent.fname,
+                    mname: AppComponent.initialEditedStudent.mname
+                },
+                dob: this.formatDate(),
+                score: AppComponent.initialEditedStudent.score
+            });
+        }
     }
 
     public nameValidator = (control: FormControl) => {

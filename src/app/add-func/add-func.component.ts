@@ -1,4 +1,4 @@
-import { Component, DoCheck, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AppComponent } from "../app.component";
 import { EditFuncComponent } from "../edit-func/edit-func.component";
@@ -8,21 +8,18 @@ import { EditFuncComponent } from "../edit-func/edit-func.component";
     templateUrl: "./add-func.component.html",
     styleUrls: ["./add-func.component.less"]
 })
-export class AddFuncComponent extends EditFuncComponent implements OnInit, DoCheck {
+export class AddFuncComponent extends EditFuncComponent implements OnInit {
 
-    studForm(): void {
-        if (AppComponent.formAdd && !this.isWrite) {
-            this.isWrite = 1;
-            this.studentForm = new FormGroup({
-                fullName: new FormGroup({
-                    sname: new FormControl("", [Validators.required, Validators.pattern(/^[А-Я].*$/)]),
-                    fname: new FormControl("", [Validators.required, Validators.pattern(/^[А-Я].*$/), this.nameValidator]),
-                    mname: new FormControl("", [Validators.required, Validators.pattern(/^[А-Я].*$/)]),
-                }),
-                dob: new FormControl("", [Validators.required, this.dateValidator]),
-                score: new FormControl("", [Validators.required, Validators.pattern("(5|([1-4]+(.[1-9])?))")])
-            });
-        }
+    ngOnInit(): void {
+        this.studentForm = new FormGroup({
+            fullName: new FormGroup({
+                sname: new FormControl("", [Validators.required, Validators.pattern(/^[А-Я].*$/)]),
+                fname: new FormControl("", [Validators.required, Validators.pattern(/^[А-Я].*$/), this.nameValidator]),
+                mname: new FormControl("", [Validators.required, Validators.pattern(/^[А-Я].*$/)]),
+            }),
+            dob: new FormControl("", [Validators.required, this.dateValidator]),
+            score: new FormControl("", [Validators.required, Validators.pattern("(5|([1-4]+(.[1-9])?))")])
+        });
     }
 
     onSubmit(control: FormControl): void {
