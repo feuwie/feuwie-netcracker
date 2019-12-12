@@ -25,7 +25,6 @@ export class EditFuncComponent extends AppComponent implements OnInit, DoCheck {
     }
 
     ngDoCheck(): void {
-        console.log('hui');
         if (AppComponent.formEdit && !this.isWrite) {
             this.isWrite = 1;
             this.studentForm.setValue({
