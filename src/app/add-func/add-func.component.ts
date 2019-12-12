@@ -1,6 +1,6 @@
-import { Component, DoCheck } from "@angular/core";
+import { Component, DoCheck, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Add } from "../add";
+import { AppComponent } from "../app.component";
 import { EditFuncComponent } from "../edit-func/edit-func.component";
 
 @Component({
@@ -8,9 +8,10 @@ import { EditFuncComponent } from "../edit-func/edit-func.component";
     templateUrl: "./add-func.component.html",
     styleUrls: ["./add-func.component.less"]
 })
-export class AddFuncComponent extends EditFuncComponent implements DoCheck {
-    ngDoCheck(): number {
-        if (Add.formAdd && !this.isWrite) {
+export class AddFuncComponent extends EditFuncComponent implements OnInit, DoCheck {
+
+    studForm(): void {
+        if (AppComponent.formAdd && !this.isWrite) {
             this.isWrite = 1;
             this.studentForm = new FormGroup({
                 fullName: new FormGroup({
@@ -21,19 +22,18 @@ export class AddFuncComponent extends EditFuncComponent implements DoCheck {
                 dob: new FormControl("", [Validators.required, this.dateValidator]),
                 score: new FormControl("", [Validators.required, Validators.pattern("(5|([1-4]+(.[1-9])?))")])
             });
-            return 1;
         }
     }
 
     onSubmit(control: FormControl): void {
         if (control.valid) {
-            Add.addedStudent.sname = control.value.fullName.sname;
-            Add.addedStudent.fname = control.value.fullName.fname;
-            Add.addedStudent.mname = control.value.fullName.mname;
-            Add.addedStudent.dob = new Date(control.value.dob);
-            Add.addedStudent.score = control.value.score;
-            Add.confirmAdd = 1;
-            Add.formAdd = 0;
+            AppComponent.addedStudent.sname = control.value.fullName.sname;
+            AppComponent.addedStudent.fname = control.value.fullName.fname;
+            AppComponent.addedStudent.mname = control.value.fullName.mname;
+            AppComponent.addedStudent.dob = new Date(control.value.dob);
+            AppComponent.addedStudent.score = control.value.score;
+            AppComponent.confirmAdd = 1;
+            AppComponent.formAdd = 0;
             this.errorSubmit = false;
             this.isWrite = 0;
             return null;
@@ -43,12 +43,12 @@ export class AddFuncComponent extends EditFuncComponent implements DoCheck {
     }
 
     hideAddition(): number {
-        return Add.formAdd;
+        return AppComponent.formAdd;
     }
 
     cancel(): void {
         this.errorSubmit = false;
         this.isWrite = 0;
-        Add.formAdd = 0;
+        AppComponent.formAdd = 0;
     }
 }

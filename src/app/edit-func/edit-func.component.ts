@@ -1,31 +1,38 @@
-import { Component, DoCheck } from "@angular/core";
+import { Component, DoCheck, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Add } from "../add";
+import { AppComponent } from "../app.component";
 
 @Component({
     selector: "app-edit-func",
     templateUrl: "./edit-func.component.html",
     styleUrls: ["./edit-func.component.less"]
 })
-export class EditFuncComponent implements DoCheck {
+export class EditFuncComponent extends AppComponent implements OnInit, DoCheck {
     studentForm: FormGroup;
     isWrite = 0;
     errorSubmit = false;
 
-    ngDoCheck(): number {
-        if (Add.formEdit && !this.isWrite) {
+    ngOnInit(): void {
+        this.studForm();
+    }
+
+    studForm(): void {
+        if (AppComponent.formEdit && !this.isWrite) {
             this.isWrite = 1;
             this.studentForm = new FormGroup({
                 fullName: new FormGroup({
-                    sname: new FormControl(Add.initialEditedStudent.sname, [Validators.required, Validators.pattern(/^[А-Я].*$/)]),
-                    fname: new FormControl(Add.initialEditedStudent.fname, [Validators.required, Validators.pattern(/^[А-Я].*$/), this.nameValidator]),
-                    mname: new FormControl(Add.initialEditedStudent.mname, [Validators.required, Validators.pattern(/^[А-Я].*$/)]),
+                    sname: new FormControl(AppComponent.initialEditedStudent.sname, [Validators.required, Validators.pattern(/^[А-Я].*$/)]),
+                    fname: new FormControl(AppComponent.initialEditedStudent.fname, [Validators.required, Validators.pattern(/^[А-Я].*$/), this.nameValidator]),
+                    mname: new FormControl(AppComponent.initialEditedStudent.mname, [Validators.required, Validators.pattern(/^[А-Я].*$/)]),
                 }),
                 dob: new FormControl(this.formatDate(), [Validators.required, this.dateValidator]),
-                score: new FormControl(Add.initialEditedStudent.score, [Validators.required, Validators.pattern("(5|([1-4]+(.[1-9])?))")])
+                score: new FormControl(AppComponent.initialEditedStudent.score, [Validators.required, Validators.pattern("(5|([1-4]+(.[1-9])?))")])
             });
-            return 1;
         }
+    }
+
+    ngDoCheck(): void {
+        this.studForm();
     }
 
     public nameValidator = (control: FormControl) => {
@@ -46,9 +53,9 @@ export class EditFuncComponent implements DoCheck {
     }
 
     formatDate(): string {
-        const day = String(Add.initialEditedStudent.dob.getDate() + 1);
-        const month = String(Add.initialEditedStudent.dob.getMonth() + 1);
-        const year = Add.initialEditedStudent.dob.getFullYear();
+        const day = String(AppComponent.initialEditedStudent.dob.getDate() + 1);
+        const month = String(AppComponent.initialEditedStudent.dob.getMonth() + 1);
+        const year = AppComponent.initialEditedStudent.dob.getFullYear();
         const fullYear = month + "-" + day + "-" + year;
         return new Date(fullYear).toISOString().split("T")[0];
     }
@@ -61,13 +68,13 @@ export class EditFuncComponent implements DoCheck {
 
     onSubmit(control: FormControl): void {
         if (control.valid) {
-            Add.editedStudent.sname = control.value.fullName.sname;
-            Add.editedStudent.fname = control.value.fullName.fname;
-            Add.editedStudent.mname = control.value.fullName.mname;
-            Add.editedStudent.dob = new Date(control.value.dob);
-            Add.editedStudent.score = control.value.score;
-            Add.confirmEdit = 1;
-            Add.formEdit = 0;
+            AppComponent.editedStudent.sname = control.value.fullName.sname;
+            AppComponent.editedStudent.fname = control.value.fullName.fname;
+            AppComponent.editedStudent.mname = control.value.fullName.mname;
+            AppComponent.editedStudent.dob = new Date(control.value.dob);
+            AppComponent.editedStudent.score = control.value.score;
+            AppComponent.confirmEdit = 1;
+            AppComponent.formEdit = 0;
             this.errorSubmit = false;
             this.isWrite = 0;
             return null;
@@ -76,11 +83,11 @@ export class EditFuncComponent implements DoCheck {
         return null;
     }
     hideEdition(): number {
-        return Add.formEdit;
+        return AppComponent.formEdit;
     }
     cancel(): void {
         this.errorSubmit = false;
         this.isWrite = 0;
-        Add.formEdit = 0;
+        AppComponent.formEdit = 0;
     }
 }

@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { Add } from "./add";
 import { Student } from "./student";
 
 @Component({
@@ -9,6 +8,16 @@ import { Student } from "./student";
 })
 
 export class AppComponent {
+    static formDelete = 0;
+    static formEdit = 0;
+    static formAdd = 0;
+    static confirmDelete = 0;
+    static confirmEdit = 0;
+    static confirmAdd = 0;
+    static deletedStudent = new Student("", "", "", null, 1);
+    static editedStudent = new Student("", "", "", null, 1);
+    static initialEditedStudent = new Student("", "", "", null, 1);
+    static addedStudent = new Student("", "", "", null, 1);
     check: boolean;
     sname: string;
     fname: string;
@@ -122,40 +131,40 @@ export class AppComponent {
     }
 
     deletionPopup(stud: Student): number {
-        Add.deletedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
-        Add.formDelete = 1;
+        AppComponent.deletedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
+        AppComponent.formDelete = 1;
         return 1;
     }
 
     editionPopup(stud: Student): number {
-        Add.initialEditedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
-        Add.formEdit = 1;
+        AppComponent.initialEditedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
+        AppComponent.formEdit = 1;
         return 1;
     }
 
     additionPopup(): number {
-        Add.formAdd = 1;
+        AppComponent.formAdd = 1;
         return 1;
     }
 
     checkAll(): number {
-        if (Add.confirmDelete === 1) {
-            Add.confirmDelete = 0;
-            this.deletionStudent(Add.deletedStudent);
+        if (AppComponent.confirmDelete === 1) {
+            AppComponent.confirmDelete = 0;
+            this.deletionStudent(AppComponent.deletedStudent);
         }
-        if (Add.confirmEdit === 1) {
-            Add.confirmEdit = 0;
-            this.editionStudent(Add.initialEditedStudent, Add.editedStudent);
+        if (AppComponent.confirmEdit === 1) {
+            AppComponent.confirmEdit = 0;
+            this.editionStudent(AppComponent.initialEditedStudent, AppComponent.editedStudent);
         }
-        if (Add.confirmAdd === 1) {
-            Add.confirmAdd = 0;
-            this.additionStudent(Add.addedStudent);
+        if (AppComponent.confirmAdd === 1) {
+            AppComponent.confirmAdd = 0;
+            this.additionStudent(AppComponent.addedStudent);
         }
         return 1;
     }
 
     backHide(): number {
-        return Add.formDelete || Add.formEdit || Add.formAdd;
+        return AppComponent.formDelete || AppComponent.formEdit || AppComponent.formAdd;
     }
 
     searchSt(snamee?: string, fnamee?: string): boolean {

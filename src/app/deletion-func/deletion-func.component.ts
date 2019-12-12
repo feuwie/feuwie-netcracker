@@ -1,20 +1,21 @@
 import { Component } from "@angular/core";
-import { Add } from "../add";
+import { AppComponent } from "../app.component";
+import { EditFuncComponent } from "../edit-func/edit-func.component";
 
 @Component({
     selector: "app-deletion-func",
     templateUrl: "./deletion-func.component.html",
     styleUrls: ["./deletion-func.component.less"],
 })
-export class DeletionFuncComponent {
+export class DeletionFuncComponent extends EditFuncComponent {
     hideDeletion(): number {
-        return Add.formDelete;
+        return AppComponent.formDelete;
     }
     submit(): void {
-        Add.confirmDelete = 1;
+        AppComponent.confirmDelete = 1;
         this.cancel();
     }
     cancel(): void {
-        Add.formDelete = 0;
+        AppComponent.formDelete = 0;
     }
 }
