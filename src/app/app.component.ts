@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
+import { EditFuncComponent } from "./edit-func/edit-func.component";
 import { Student } from "./student";
 
 @Component({
@@ -18,6 +19,10 @@ export class AppComponent {
     static editedStudent = new Student("", "", "", null, 1);
     static initialEditedStudent = new Student("", "", "", null, 1);
     static addedStudent = new Student("", "", "", null, 1);
+
+    @ViewChild(EditFuncComponent, { static: true })
+    primarySampleComponent: EditFuncComponent;
+
     check: boolean;
     sname: string;
     fname: string;
@@ -139,6 +144,7 @@ export class AppComponent {
     editionPopup(stud: Student): number {
         AppComponent.initialEditedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
         AppComponent.formEdit = 1;
+        this.primarySampleComponent.studYou(AppComponent.initialEditedStudent);
         return 1;
     }
 
