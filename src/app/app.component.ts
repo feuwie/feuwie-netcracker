@@ -9,17 +9,18 @@ import { Student } from "./student";
 })
 
 export class AppComponent {
-    static formDelete = 0;
-    static formEdit = 0;
-    static formAdd = 0;
     static confirmDelete = 0;
     static confirmEdit = 0;
     static confirmAdd = 0;
+    static formDelete = 0;
+    static formEdit = 0;
+    static formAdd = 0;
     static deletedStudent = new Student("", "", "", null, 1);
     static editedStudent = new Student("", "", "", null, 1);
     static initialEditedStudent = new Student("", "", "", null, 1);
     static addedStudent = new Student("", "", "", null, 1);
 
+    // : Student;
     info: Student;
     check: boolean;
     sname: string;
@@ -136,6 +137,7 @@ export class AppComponent {
     deletionPopup(stud: Student): number {
         AppComponent.deletedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
         AppComponent.formDelete = 1;
+        this.info = AppComponent.deletedStudent;
         return 1;
     }
 
@@ -146,8 +148,9 @@ export class AppComponent {
         return 1;
     }
 
-    additionPopup(): number {
+    additionPopup(stud: Student): number {
         AppComponent.formAdd = 1;
+        this.info = new Student(" ", " ", " ", null, 1);
         return 1;
     }
 
@@ -168,7 +171,7 @@ export class AppComponent {
     }
 
     backHide(): number {
-        return AppComponent.formDelete || AppComponent.formEdit || AppComponent.formAdd;
+        return (AppComponent.formDelete || AppComponent.formEdit || AppComponent.formAdd);
     }
 
     searchSt(snamee?: string, fnamee?: string): boolean {

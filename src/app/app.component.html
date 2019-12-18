@@ -33,7 +33,8 @@
                         <input type="image" src="https://i.ibb.co/nCKMYsY/drop-up-arrow-2.png" (click)="sort(2)"></p>
                 </th>
                 <th class="main__table-header-row-column">
-                    <p filterChoose>Имя <input type="image" src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png" (click)="sort(3)">
+                    <p filterChoose>Имя <input type="image" src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png"
+                            (click)="sort(3)">
                         <input type="image" src="https://i.ibb.co/nCKMYsY/drop-up-arrow-2.png" (click)="sort(4)"></p>
                 </th>
                 <th class="main__table-header-row-column">
@@ -42,13 +43,13 @@
                         <input type="image" src="https://i.ibb.co/nCKMYsY/drop-up-arrow-2.png" (click)="sort(6)"></p>
                 </th>
                 <th class="main__table-header-row-column">
-                    <p filterChoose>Дата рождения <input type="image" src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png"
-                            (click)="sort(7)">
+                    <p filterChoose>Дата рождения <input type="image"
+                            src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png" (click)="sort(7)">
                         <input type="image" src="https://i.ibb.co/nCKMYsY/drop-up-arrow-2.png" (click)="sort(8)"></p>
                 </th>
                 <th class="main__table-header-row-column">
-                    <p filterChoose>Средний балл <input type="image" src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png"
-                            (click)="sort(9)">
+                    <p filterChoose>Средний балл <input type="image"
+                            src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png" (click)="sort(9)">
                         <input type="image" src="https://i.ibb.co/nCKMYsY/drop-up-arrow-2.png" (click)="sort(10)"></p>
                 </th>
                 <th class="main__table-header-row-column">Удаление</th>
@@ -81,7 +82,6 @@
     </table>
     <div class="main__add"><input type="button" (click)="additionPopup()" value="Добавить студента"></div>
 </div>
-<app-deletion-func></app-deletion-func>
 <app-edit-func [stud]="info"></app-edit-func>
-<app-add-func></app-add-func>
-<router-outlet></router-outlet>
+<app-deletion-func [stud]="info"></app-deletion-func>
+<app-add-func [stud]="info"></app-add-func>

@@ -1,14 +1,18 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { AppComponent } from "../app.component";
 import { EditFuncComponent } from "../edit-func/edit-func.component";
+import { Student } from "../student";
 
 @Component({
     selector: "app-add-func",
     templateUrl: "./add-func.component.html",
     styleUrls: ["./add-func.component.less"],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddFuncComponent extends EditFuncComponent implements OnInit {
+
+    @Input() stud: Student;
 
     onSubmit(control: FormControl): void {
         if (control.valid) {

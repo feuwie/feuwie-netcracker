@@ -1,28 +1,19 @@
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
-import { RouterModule, Routes } from "@angular/router";
-import { AddFuncComponent } from "./add-func/add-func.component";
+import { AddFuncModule } from "./add-func/add-func.module";
 import { AppComponent } from "./app.component";
-import { DeletionFuncComponent } from "./deletion-func/deletion-func.component";
-import { EditFuncComponent } from "./edit-func/edit-func.component";
+import { DeletionFuncModule } from "./deletion-func/deletion-func.module";
+import { EditFuncModule } from "./edit-func/edit-func.module";
 import { FilterChooseDirective } from "./filterchoose.directive";
 import { HighlightDirective } from "./highlight.directive";
 import { PerformPipe } from "./perform.pipe";
 import { SexPipe } from "./sex.pipe";
 import { ChangeTextDirective } from "./textcolor.directive";
 
-const appRoutes: Routes = [
-    { path: "add", component: AddFuncComponent},
-    { path: "delete", component: DeletionFuncComponent},
-    { path: "edit", component: EditFuncComponent },
-];
 @NgModule({
     declarations: [
         AppComponent,
-        DeletionFuncComponent,
-        AddFuncComponent,
-        EditFuncComponent,
         HighlightDirective,
         ChangeTextDirective,
         FilterChooseDirective,
@@ -33,7 +24,9 @@ const appRoutes: Routes = [
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
-        RouterModule.forRoot(appRoutes),
+        EditFuncModule,
+        DeletionFuncModule,
+        AddFuncModule,
     ],
     providers: [],
     bootstrap: [AppComponent]
