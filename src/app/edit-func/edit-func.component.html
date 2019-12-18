@@ -1,11 +1,10 @@
 <div class="edition" *ngIf="hideEdition()">
-    <p>Hello, {{ userName }}</p>
     <p class="edition__confirm">Редактирование студента</p>
-    <form class="edition__form" [formGroup]="studentForm" (submit)="onSubmit(studentForm)">
+    <form class="edition__form" [formGroup]="studentForm" (submit)="onSubmit(studentForm)" [ngClass]="studForm()">
         <div formGroupName="fullName">
             <div class="edition__form-field">
                 <label for="sname">Фамилия<br></label>
-                <input type="text" id="sname" formControlName="sname" />
+                <input type="text" id="sname" formControlName="sname" value="{{stud.sname}}"/>
                 <div class="warning" *ngIf="studentValidator('sname')">
                     Фамилия должно начинаться с большой буквы, и состоять из русских букв.
                 </div>
@@ -13,7 +12,7 @@
             <br>
             <div class="edition__form-field-name">
                 <label for="fname">Имя<br></label>
-                <input type="text" id="fname" formControlName="fname" />
+                <input type="text" id="fname" formControlName="fname" value="{{stud.fname}}"/>
                 <div class="warning" *ngIf="studentValidator('fname')">
                     Имя должно начинаться с большой буквы, состоять из русских букв и не совпадать с
                     Фамилией и Отчеством.
@@ -22,7 +21,7 @@
             <br>
             <div class="edition__form-field">
                 <label for="mname">Отчество<br></label>
-                <input type="text" id="mname" formControlName="mname" />
+                <input type="text" id="mname" formControlName="mname" value="{{stud.mname}}"  />
                 <div class="warning" *ngIf="studentValidator('mname')">
                     Отчество должно начинаться с большой буквы, и состоять из русских букв.
                 </div>
@@ -31,7 +30,7 @@
         <br>
         <div class="edition__form-field">
             <label for="dob">Дата рождения<br></label>
-            <input type="date" id="dob" formControlName="dob" />
+            <input type="date" id="dob" formControlName="dob"/>
             <div class="warning" *ngIf="studentValidator('dob')">
                 Дата рождения не должна отличаться от текущей больше чем на 10 лет и должна быть валидной.
             </div>
@@ -39,7 +38,7 @@
         <br>
         <div class="edition__form-field">
             <label for="score">Средний балл<br></label>
-            <input type="text" id="score" formControlName="score" />
+            <input type="text" id="score" formControlName="score" value="{{stud.score}}" />
             <div class="warning" *ngIf="studentValidator('score')">
                 Средний бал должен быть в пределах от 1 до 5.
             </div>

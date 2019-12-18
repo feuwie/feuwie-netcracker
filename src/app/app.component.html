@@ -2,7 +2,7 @@
 <div class="main">
     <div class="main__functions">
         <div class="main__functions-all">
-            Управление таблицей
+            <p changeText textColor="red" textSize="18px">Управление таблицей</p>
         </div>
         <div class="main__functions-score">
             Балл ниже 3 <br>
@@ -28,26 +28,26 @@
         <thead class="main__table-header">
             <tr class="main__table-header-row">
                 <th class="main__table-header-row-column">
-                    <p>Фамилия <input type="image" src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png"
+                    <p filterChoose>Фамилия <input type="image" src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png"
                             (click)="sort(1)">
                         <input type="image" src="https://i.ibb.co/nCKMYsY/drop-up-arrow-2.png" (click)="sort(2)"></p>
                 </th>
                 <th class="main__table-header-row-column">
-                    <p>Имя <input type="image" src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png" (click)="sort(3)">
+                    <p filterChoose>Имя <input type="image" src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png" (click)="sort(3)">
                         <input type="image" src="https://i.ibb.co/nCKMYsY/drop-up-arrow-2.png" (click)="sort(4)"></p>
                 </th>
                 <th class="main__table-header-row-column">
-                    <p>Отчество <input type="image" src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png"
+                    <p filterChoose>Отчество <input type="image" src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png"
                             (click)="sort(5)">
                         <input type="image" src="https://i.ibb.co/nCKMYsY/drop-up-arrow-2.png" (click)="sort(6)"></p>
                 </th>
                 <th class="main__table-header-row-column">
-                    <p>Дата рождения <input type="image" src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png"
+                    <p filterChoose>Дата рождения <input type="image" src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png"
                             (click)="sort(7)">
                         <input type="image" src="https://i.ibb.co/nCKMYsY/drop-up-arrow-2.png" (click)="sort(8)"></p>
                 </th>
                 <th class="main__table-header-row-column">
-                    <p>Средний балл <input type="image" src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png"
+                    <p filterChoose>Средний балл <input type="image" src="https://i.ibb.co/VtjpRKf/drop-down-arrow-2.png"
                             (click)="sort(9)">
                         <input type="image" src="https://i.ibb.co/nCKMYsY/drop-up-arrow-2.png" (click)="sort(10)"></p>
                 </th>
@@ -57,15 +57,15 @@
             </tr>
         </thead>
         <tbody class="main__table-content">
-            <tr class="main__table-content-row" *ngFor="let stud of students"
+            <tr highLight class="main__table-content-row" *ngFor="let stud of students"
                 [ngClass]="searchSt(stud.sname, stud.fname) ? 'names' : searchSc(stud.score) ? 'scores' : ''">
                 <ng-container *ngIf="filterScoreF(stud.score)">
                     <ng-container *ngIf="filterDOBF(stud.dob)">
-                        <td class="main__table-content-row-column">{{stud.sname}}</td>
-                        <td class="main__table-content-row-column">{{stud.fname}}</td>
-                        <td class="main__table-content-row-column">{{stud.mname}}</td>
-                        <td class="main__table-content-row-column">{{formatDate(stud.dob)}}</td>
-                        <td class="main__table-content-row-column">{{stud.score}}</td>
+                        <td class="main__table-content-row-column">{{stud.sname | uppercase}}</td>
+                        <td class="main__table-content-row-column">{{stud.fname | lowercase}}</td>
+                        <td class="main__table-content-row-column">{{stud.mname | sex}}</td>
+                        <td class="main__table-content-row-column">{{stud.dob | date:"dd/MM/yyyy"}} года</td>
+                        <td class="main__table-content-row-column">{{stud.score | perform}}</td>
                         <td class="main__table-content-row-column">
                             <input class="main__table-content-row-column-deletebtn" type="button"
                                 (click)="deletionPopup(stud)" value="Удалить">
@@ -82,5 +82,6 @@
     <div class="main__add"><input type="button" (click)="additionPopup()" value="Добавить студента"></div>
 </div>
 <app-deletion-func></app-deletion-func>
-<app-edit-func [userName]="name"></app-edit-func>
+<app-edit-func [stud]="info"></app-edit-func>
 <app-add-func></app-add-func>
+<router-outlet></router-outlet>

@@ -1,10 +1,11 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { Student } from "./student";
 
 @Component({
     selector: "app-root",
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.less"],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class AppComponent {
@@ -19,8 +20,7 @@ export class AppComponent {
     static initialEditedStudent = new Student("", "", "", null, 1);
     static addedStudent = new Student("", "", "", null, 1);
 
-    name: string = "Misha";
-
+    info: Student;
     check: boolean;
     sname: string;
     fname: string;
@@ -73,26 +73,26 @@ export class AppComponent {
         },
     ];
 
-    formatDate(date: Date): string {
-        const monthNames = [
-            "января",
-            "февраля",
-            "марта",
-            "апреля",
-            "мая",
-            "июня",
-            "июля",
-            "августа",
-            "сентября",
-            "октября",
-            "ноября",
-            "декабря",
-        ];
-        const day = date.getDate();
-        const monthIndex = date.getMonth();
-        const year = date.getFullYear();
-        return day + " " + monthNames[monthIndex] + " " + year + " года";
-    }
+    // formatDate(date: Date): string {
+    //     const monthNames = [
+    //         "января",
+    //         "февраля",
+    //         "марта",
+    //         "апреля",
+    //         "мая",
+    //         "июня",
+    //         "июля",
+    //         "августа",
+    //         "сентября",
+    //         "октября",
+    //         "ноября",
+    //         "декабря",
+    //     ];
+    //     const day = date.getDate();
+    //     const monthIndex = date.getMonth();
+    //     const year = date.getFullYear();
+    //     return day + " " + monthNames[monthIndex] + " " + year + " года";
+    // }
 
     deletionStudent(stud: Student): number {
         for (const [i, stude] of this.students.entries()) {
@@ -142,6 +142,7 @@ export class AppComponent {
     editionPopup(stud: Student): number {
         AppComponent.initialEditedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
         AppComponent.formEdit = 1;
+        this.info = AppComponent.initialEditedStudent;
         return 1;
     }
 
@@ -197,9 +198,9 @@ export class AppComponent {
         return score >= (this.afilter || 1);
     }
 
-    filterDOBF(date: Date, score: number): boolean {
-        const ndate = this.formatDate(date);
-        return this.dobfilter !== undefined ? ndate === this.dobfilter : ndate >= "";
+    filterDOBF(date: Date): boolean {
+        // const ndate = this.formatDate(date);
+        return this.dobfilter !== undefined ? String(date) === this.dobfilter : String(date) >= "";
     }
 
     sort(n: number): void {
