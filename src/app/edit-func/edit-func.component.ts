@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { AppComponent } from "../app.component";
 import { Student } from "../student";
 
 @Component({
@@ -15,6 +14,12 @@ export class EditFuncComponent implements OnInit {
     errorSubmit = false;
 
     @Input() stud: Student;
+    @Input() formEditInput: number;
+    @Output() editEvent = new EventEmitter();
+    @Output() cEditEvent = new EventEmitter();
+    @Output() fEditEvent = new EventEmitter();
+
+    confirmEdit: number;
 
     ngOnInit(): void {
         this.studentForm = new FormGroup({
@@ -29,7 +34,7 @@ export class EditFuncComponent implements OnInit {
     }
 
     studForm(): void {
-        if (AppComponent.formEdit && !this.isWrite) {
+        if (this.formEditInput && !this.isWrite) {
             this.isWrite = 1;
             this.studentForm.patchValue({
                 fullName: {
@@ -76,13 +81,19 @@ export class EditFuncComponent implements OnInit {
 
     onSubmit(control: FormControl): void {
         if (control.valid) {
-            AppComponent.editedStudent.sname = control.value.fullName.sname;
-            AppComponent.editedStudent.fname = control.value.fullName.fname;
-            AppComponent.editedStudent.mname = control.value.fullName.mname;
-            AppComponent.editedStudent.dob = new Date(control.value.dob);
-            AppComponent.editedStudent.score = control.value.score;
-            AppComponent.confirmEdit = 1;
-            AppComponent.formEdit = 0;
+            this.editEvent.emit({
+                sname: control.value.fullName.sname,
+                fname: control.value.fullName.fname,
+                mname: control.value.fullName.mname,
+                dob: new Date(control.value.dob),
+                score: control.value.score
+            });
+            this.cEditEvent.emit(
+                this.confirmEdit = 1,
+            );
+            this.fEditEvent.emit(
+                this.formEditInput = 0,
+            );
             this.errorSubmit = false;
             this.isWrite = 0;
             return null;
@@ -91,11 +102,13 @@ export class EditFuncComponent implements OnInit {
         return null;
     }
     hideEdition(): number {
-        return AppComponent.formEdit;
+        return this.formEditInput;
     }
     cancel(): void {
         this.errorSubmit = false;
         this.isWrite = 0;
-        AppComponent.formEdit = 0;
+        this.fEditEvent.emit(
+            this.formEditInput = 0,
+        );
     }
 }

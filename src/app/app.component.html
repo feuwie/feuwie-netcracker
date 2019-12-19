@@ -62,10 +62,10 @@
                 [ngClass]="searchSt(stud.sname, stud.fname) ? 'names' : searchSc(stud.score) ? 'scores' : ''">
                 <ng-container *ngIf="filterScoreF(stud.score)">
                     <ng-container *ngIf="filterDOBF(stud.dob)">
-                        <td class="main__table-content-row-column">{{stud.sname | uppercase}}</td>
-                        <td class="main__table-content-row-column">{{stud.fname | lowercase}}</td>
-                        <td class="main__table-content-row-column">{{stud.mname | sex}}</td>
-                        <td class="main__table-content-row-column">{{stud.dob | date:"dd/MM/yyyy"}} года</td>
+                        <td class="main__table-content-row-column">{{stud.sname}}</td>
+                        <td class="main__table-content-row-column">{{stud.fname}}</td>
+                        <td class="main__table-content-row-column">{{stud.mname}}</td>
+                        <td class="main__table-content-row-column">{{formatDate(stud.dob)}}</td>
                         <td class="main__table-content-row-column">{{stud.score | perform}}</td>
                         <td class="main__table-content-row-column">
                             <input class="main__table-content-row-column-deletebtn" type="button"
@@ -82,6 +82,9 @@
     </table>
     <div class="main__add"><input type="button" (click)="additionPopup()" value="Добавить студента"></div>
 </div>
-<app-edit-func [stud]="info"></app-edit-func>
-<app-deletion-func [stud]="info"></app-deletion-func>
-<app-add-func [stud]="info"></app-add-func>
+<app-edit-func [stud]="info" [formEditInput]="formEdit" (editEvent)="editOut($event)" (fEditEvent)="fEdit($event)"
+    (cEditEvent)="cEdit($event)"></app-edit-func>
+<app-deletion-func [formDelInput]="formDelete" (cDeleteEvent)="cDelete($event)" (fDeleteEvent)="fDelete($event)">
+</app-deletion-func>
+<app-add-func [formAddInput]="formAdd" (addEvent)="addOut($event)" (fAddEvent)="fAdd($event)"
+    (cAddEvent)="cAdd($event)"></app-add-func>

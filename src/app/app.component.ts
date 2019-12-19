@@ -9,19 +9,12 @@ import { Student } from "./student";
 })
 
 export class AppComponent {
-    static confirmDelete = 0;
-    static confirmEdit = 0;
-    static confirmAdd = 0;
-    static formDelete = 0;
-    static formEdit = 0;
-    static formAdd = 0;
-    static deletedStudent = new Student("", "", "", null, 1);
-    static editedStudent = new Student("", "", "", null, 1);
-    static initialEditedStudent = new Student("", "", "", null, 1);
-    static addedStudent = new Student("", "", "", null, 1);
-
-    // : Student;
-    info: Student;
+    confirmEdit: number;
+    formEdit: number;
+    confirmAdd: number;
+    formAdd: number;
+    formDelete: number;
+    confirmDelete: number;
     check: boolean;
     sname: string;
     fname: string;
@@ -29,6 +22,11 @@ export class AppComponent {
     yearbd: string;
     afilter: string;
     dobfilter: string;
+    info: Student;
+    deletedStudent: Student;
+    addedStudent: Student;
+    initialEditedStudent: Student;
+    editedStudent: Student;
     students: Student[] = [
         {
             sname: "Иванова",
@@ -74,26 +72,59 @@ export class AppComponent {
         },
     ];
 
-    // formatDate(date: Date): string {
-    //     const monthNames = [
-    //         "января",
-    //         "февраля",
-    //         "марта",
-    //         "апреля",
-    //         "мая",
-    //         "июня",
-    //         "июля",
-    //         "августа",
-    //         "сентября",
-    //         "октября",
-    //         "ноября",
-    //         "декабря",
-    //     ];
-    //     const day = date.getDate();
-    //     const monthIndex = date.getMonth();
-    //     const year = date.getFullYear();
-    //     return day + " " + monthNames[monthIndex] + " " + year + " года";
-    // }
+
+    cDelete(event: number): void {
+        this.confirmDelete = event;
+    }
+
+    fDelete(event: number): void {
+        this.formDelete = event;
+    }
+
+    cEdit(event: number): void {
+        this.confirmEdit = event;
+    }
+
+    fEdit(event: number): void {
+        this.formEdit = event;
+    }
+
+    fAdd(event: number): void {
+        this.formAdd = event;
+    }
+
+    cAdd(event: number): void {
+        this.confirmAdd = event;
+    }
+
+    addOut(event: Student): void {
+        this.addedStudent = event;
+    }
+
+    editOut(event: Student): void {
+        this.editedStudent = event;
+    }
+
+    formatDate(date: Date): string {
+        const monthNames = [
+            "января",
+            "февраля",
+            "марта",
+            "апреля",
+            "мая",
+            "июня",
+            "июля",
+            "августа",
+            "сентября",
+            "октября",
+            "ноября",
+            "декабря",
+        ];
+        const day = date.getDate();
+        const monthIndex = date.getMonth();
+        const year = date.getFullYear();
+        return day + " " + monthNames[monthIndex] + " " + year + " года";
+    }
 
     deletionStudent(stud: Student): number {
         for (const [i, stude] of this.students.entries()) {
@@ -135,43 +166,41 @@ export class AppComponent {
     }
 
     deletionPopup(stud: Student): number {
-        AppComponent.deletedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
-        AppComponent.formDelete = 1;
-        this.info = AppComponent.deletedStudent;
+        this.deletedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
+        this.formDelete = 1;
         return 1;
     }
 
     editionPopup(stud: Student): number {
-        AppComponent.initialEditedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
-        AppComponent.formEdit = 1;
-        this.info = AppComponent.initialEditedStudent;
+        this.initialEditedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
+        this.formEdit = 1;
+        this.info = this.initialEditedStudent;
         return 1;
     }
 
-    additionPopup(stud: Student): number {
-        AppComponent.formAdd = 1;
-        this.info = new Student(" ", " ", " ", null, 1);
+    additionPopup(): number {
+        this.formAdd = 1;
         return 1;
     }
 
     checkAll(): number {
-        if (AppComponent.confirmDelete === 1) {
-            AppComponent.confirmDelete = 0;
-            this.deletionStudent(AppComponent.deletedStudent);
+        if (this.confirmDelete === 1) {
+            this.confirmDelete = 0;
+            this.deletionStudent(this.deletedStudent);
         }
-        if (AppComponent.confirmEdit === 1) {
-            AppComponent.confirmEdit = 0;
-            this.editionStudent(AppComponent.initialEditedStudent, AppComponent.editedStudent);
+        if (this.confirmEdit === 1) {
+            this.confirmEdit = 0;
+            this.editionStudent(this.initialEditedStudent, this.editedStudent);
         }
-        if (AppComponent.confirmAdd === 1) {
-            AppComponent.confirmAdd = 0;
-            this.additionStudent(AppComponent.addedStudent);
+        if (this.confirmAdd === 1) {
+            this.confirmAdd = 0;
+            this.additionStudent(this.addedStudent);
         }
         return 1;
     }
 
     backHide(): number {
-        return (AppComponent.formDelete || AppComponent.formEdit || AppComponent.formAdd);
+        return this.formDelete || this.formEdit || this.formAdd;
     }
 
     searchSt(snamee?: string, fnamee?: string): boolean {
@@ -201,9 +230,9 @@ export class AppComponent {
         return score >= (this.afilter || 1);
     }
 
-    filterDOBF(date: Date): boolean {
-        // const ndate = this.formatDate(date);
-        return this.dobfilter !== undefined ? String(date) === this.dobfilter : String(date) >= "";
+    filterDOBF(date: Date, score: number): boolean {
+        const ndate = this.formatDate(date);
+        return (this.dobfilter === undefined || this.dobfilter === "") ? ndate >= "" : ndate === this.dobfilter;
     }
 
     sort(n: number): void {

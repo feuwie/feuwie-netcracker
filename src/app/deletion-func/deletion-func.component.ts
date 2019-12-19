@@ -1,7 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
-import { AppComponent } from "../app.component";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { EditFuncComponent } from "../edit-func/edit-func.component";
-import { Student } from "../student";
 
 @Component({
     selector: "app-deletion-func",
@@ -10,18 +8,27 @@ import { Student } from "../student";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DeletionFuncComponent extends EditFuncComponent implements OnInit {
-    @Input() stud: Student;
+
+    @Input() formDelInput: number;
+    @Output() cDeleteEvent = new EventEmitter();
+    @Output() fDeleteEvent = new EventEmitter();
+
+    confirmDelete: number;
 
     submit(): void {
-        AppComponent.confirmDelete = 1;
+        this.cDeleteEvent.emit(
+            this.confirmDelete = 1,
+        );
         this.cancel();
     }
 
     cancel(): void {
-        AppComponent.formDelete = 0;
+        this.fDeleteEvent.emit(
+            this.formDelInput = 0,
+        );
     }
 
     hideDeletion(): number {
-        return AppComponent.formDelete;
+        return this.formDelInput;
     }
 }

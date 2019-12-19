@@ -1,8 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { AppComponent } from "../app.component";
 import { EditFuncComponent } from "../edit-func/edit-func.component";
-import { Student } from "../student";
 
 @Component({
     selector: "app-add-func",
@@ -12,17 +10,29 @@ import { Student } from "../student";
 })
 export class AddFuncComponent extends EditFuncComponent implements OnInit {
 
-    @Input() stud: Student;
+    @Input() formAddInput: number;
+    @Output() addEvent = new EventEmitter();
+    @Output() fAddEvent = new EventEmitter();
+    @Output() cAddEvent = new EventEmitter();
+
+    confirmAdd: number;
 
     onSubmit(control: FormControl): void {
         if (control.valid) {
-            AppComponent.addedStudent.sname = control.value.fullName.sname;
-            AppComponent.addedStudent.fname = control.value.fullName.fname;
-            AppComponent.addedStudent.mname = control.value.fullName.mname;
-            AppComponent.addedStudent.dob = new Date(control.value.dob);
-            AppComponent.addedStudent.score = control.value.score;
-            AppComponent.confirmAdd = 1;
-            AppComponent.formAdd = 0;
+            this.addEvent.emit({
+                sname: control.value.fullName.sname,
+                fname: control.value.fullName.fname,
+                mname: control.value.fullName.mname,
+                dob: new Date(control.value.dob),
+                score: control.value.score
+            });
+            this.studentForm.reset();
+            this.cAddEvent.emit(
+                this.confirmAdd = 1,
+            );
+            this.fAddEvent.emit(
+                this.formAddInput = 0,
+            );
             this.errorSubmit = false;
             this.isWrite = 0;
             return null;
@@ -32,12 +42,14 @@ export class AddFuncComponent extends EditFuncComponent implements OnInit {
     }
 
     hideAddition(): number {
-        return AppComponent.formAdd;
+        return this.formAddInput;
     }
 
     cancel(): void {
         this.errorSubmit = false;
         this.isWrite = 0;
-        AppComponent.formAdd = 0;
+        this.fAddEvent.emit(
+            this.formAddInput = 0,
+        );
     }
 }
