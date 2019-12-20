@@ -126,7 +126,7 @@ export class AppComponent {
         return day + " " + monthNames[monthIndex] + " " + year + " года";
     }
 
-    deletionStudent(stud: Student): number {
+    deletionStudent(stud: Student): void {
         for (const [i, stude] of this.students.entries()) {
             let check = 0;
             if (stud.sname === stude.sname && stud.fname === stude.fname && stud.mname === stude.mname && stud.dob === stude.dob && stud.score === stude.score) {
@@ -135,13 +135,11 @@ export class AppComponent {
             if (check === 1) {
                 check = 0;
                 this.students.splice(i, 1);
-                return 1;
             }
         }
-        return 0;
     }
 
-    editionStudent(stud: Student, stud2: Student): number {
+    editionStudent(stud: Student, stud2: Student): void {
         for (const stude of this.students) {
             let check = 0;
             if (stud.sname === stude.sname && stud.fname === stude.fname && stud.mname === stude.mname && stud.dob === stude.dob && stud.score === stude.score) {
@@ -154,33 +152,27 @@ export class AppComponent {
                 stude.mname = stud2.mname;
                 stude.dob = stud2.dob;
                 stude.score = stud2.score;
-                return 1;
             }
         }
-        return 0;
     }
 
-    additionStudent(stud: Student): number {
+    additionStudent(stud: Student): void {
         this.students[this.students.length] = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
-        return 1;
     }
 
-    deletionPopup(stud: Student): number {
+    deletionPopup(stud: Student): void {
         this.deletedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
         this.formDelete = 1;
-        return 1;
     }
 
-    editionPopup(stud: Student): number {
+    editionPopup(stud: Student): void {
         this.initialEditedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
         this.formEdit = 1;
         this.info = this.initialEditedStudent;
-        return 1;
     }
 
-    additionPopup(): number {
+    additionPopup(): void {
         this.formAdd = 1;
-        return 1;
     }
 
     checkAll(): number {

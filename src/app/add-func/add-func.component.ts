@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { EditFuncComponent } from "../edit-func/edit-func.component";
+import { Student } from "../student";
 
 @Component({
     selector: "app-add-func",
@@ -11,9 +12,9 @@ import { EditFuncComponent } from "../edit-func/edit-func.component";
 export class AddFuncComponent extends EditFuncComponent implements OnInit {
 
     @Input() formAddInput: number;
-    @Output() addEvent = new EventEmitter();
-    @Output() fAddEvent = new EventEmitter();
-    @Output() cAddEvent = new EventEmitter();
+    @Output() addEvent = new EventEmitter<Student>();
+    @Output() fAddEvent = new EventEmitter<number>();
+    @Output() cAddEvent = new EventEmitter<number>();
 
     confirmAdd: number;
 

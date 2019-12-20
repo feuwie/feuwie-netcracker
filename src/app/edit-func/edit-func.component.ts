@@ -15,9 +15,9 @@ export class EditFuncComponent implements OnInit {
 
     @Input() stud: Student;
     @Input() formEditInput: number;
-    @Output() editEvent = new EventEmitter();
-    @Output() cEditEvent = new EventEmitter();
-    @Output() fEditEvent = new EventEmitter();
+    @Output() editEvent = new EventEmitter<Student>();
+    @Output() cEditEvent = new EventEmitter<number>();
+    @Output() fEditEvent = new EventEmitter<number>();
 
     confirmEdit: number;
 

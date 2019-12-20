@@ -10,8 +10,8 @@ import { EditFuncComponent } from "../edit-func/edit-func.component";
 export class DeletionFuncComponent extends EditFuncComponent implements OnInit {
 
     @Input() formDelInput: number;
-    @Output() cDeleteEvent = new EventEmitter();
-    @Output() fDeleteEvent = new EventEmitter();
+    @Output() cDeleteEvent = new EventEmitter<number>();
+    @Output() fDeleteEvent = new EventEmitter<number>();
 
     confirmDelete: number;
 
