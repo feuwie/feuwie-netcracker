@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { EditFuncRoutingModule } from "./edit-func-routing.module";
 import { EditFuncComponent } from "./edit-func.component";
 
 @NgModule({
@@ -11,6 +12,7 @@ import { EditFuncComponent } from "./edit-func.component";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    EditFuncRoutingModule,
   ],
   exports: [EditFuncComponent]
 })

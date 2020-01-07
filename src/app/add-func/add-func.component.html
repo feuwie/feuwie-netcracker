@@ -1,53 +1,53 @@
-<div class="addition" *ngIf="hideAddition()">
-    <p class="addition__confirm">Добавление студента</p>
-    <form class="addition__form" [formGroup]="studentForm" (ngSubmit)="onSubmit(studentForm)">
-        <div formGroupName="fullName">
-            <div class="addition__form-field">
-                <label for="sname">Фамилия<br></label>
-                <input type="text" id="sname" formControlName="sname" />
-                <div class="warning" *ngIf="studentValidator('sname')">
-                    Фамилия должно начинаться с большой буквы, и состоять из русских букв.
+    <div class="addition" *ngIf="hideAddition()">
+        <p class="addition__confirm">Добавление студента</p>
+        <form class="addition__form" [formGroup]="studentForm" (ngSubmit)="onSubmit(studentForm)">
+            <div formGroupName="fullName">
+                <div class="addition__form-field">
+                    <label for="sname">Фамилия<br></label>
+                    <input type="text" id="sname" formControlName="sname" />
+                    <div class="warning" *ngIf="studentValidator('sname')">
+                        Фамилия должно начинаться с большой буквы, и состоять из русских букв.
+                    </div>
+                </div>
+                <br>
+                <div class="addition__form-field-name">
+                    <label for="fname">Имя<br></label>
+                    <input type="text" id="fname" formControlName="fname" />
+                    <div class="warning" *ngIf="studentValidator('fname')">
+                        Имя должно начинаться с большой буквы, состоять из русских букв и не совпадать с
+                        Фамилией и Отчеством.
+                    </div>
+                </div>
+                <br>
+                <div class="addition__form-field">
+                    <label for="mname">Отчество<br></label>
+                    <input type="text" id="mname" formControlName="mname" />
+                    <div class="warning" *ngIf="studentValidator('mname')">
+                        Отчество должно начинаться с большой буквы, и состоять из русских букв.
+                    </div>
                 </div>
             </div>
             <br>
-            <div class="addition__form-field-name">
-                <label for="fname">Имя<br></label>
-                <input type="text" id="fname" formControlName="fname" />
-                <div class="warning" *ngIf="studentValidator('fname')">
-                    Имя должно начинаться с большой буквы, состоять из русских букв и не совпадать с
-                    Фамилией и Отчеством.
+            <div class="addition__form-field">
+                <label for="dob">Дата рождения<br></label>
+                <input type="date" id="dob" formControlName="dob" />
+                <div class="warning" *ngIf="studentValidator('dob')">
+                    Дата рождения не должна отличаться от текущей больше чем на 10 лет.
                 </div>
             </div>
             <br>
             <div class="addition__form-field">
-                <label for="mname">Отчество<br></label>
-                <input type="text" id="mname" formControlName="mname" />
-                <div class="warning" *ngIf="studentValidator('mname')">
-                    Отчество должно начинаться с большой буквы, и состоять из русских букв.
+                <label for="score">Средний балл<br></label>
+                <input type="text" id="score" formControlName="score" />
+                <div class="warning" *ngIf="studentValidator('score')">
+                    Средний бал должен быть в пределах от 1 до 5.
                 </div>
             </div>
-        </div>
-        <br>
-        <div class="addition__form-field">
-            <label for="dob">Дата рождения<br></label>
-            <input type="date" id="dob" formControlName="dob" />
-            <div class="warning" *ngIf="studentValidator('dob')">
-                Дата рождения не должна отличаться от текущей больше чем на 10 лет.
+            <br>
+            <button type="submit">Добавить</button>
+            <button (click)="cancel()" routerLink="">Отмена</button>
+            <div class="warning" *ngIf="errorSubmit">
+                Поля не заполнены или есть ошибки!
             </div>
-        </div>
-        <br>
-        <div class="addition__form-field">
-            <label for="score">Средний балл<br></label>
-            <input type="text" id="score" formControlName="score" />
-            <div class="warning" *ngIf="studentValidator('score')">
-                Средний бал должен быть в пределах от 1 до 5.
-            </div>
-        </div>
-        <br>
-        <button type="submit">Добавить</button>
-        <button (click)="cancel()">Отмена</button>
-        <div class="warning" *ngIf="errorSubmit">
-            Поля не заполнены или есть ошибки!
-        </div>
-    </form>
-</div>
+        </form>
+    </div>

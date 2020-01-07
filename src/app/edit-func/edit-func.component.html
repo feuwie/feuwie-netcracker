@@ -44,8 +44,8 @@
             </div>
         </div>
         <br>
-        <button type="submit">Отредактировать</button>
-        <button (click)="cancel()">Отмена</button>
+        <button type="submit" routerLink="">Отредактировать</button>
+        <button (click)="cancel()" routerLink="">Отмена</button>
         <div class="warning" *ngIf="errorSubmit">
             Поля не заполнены или есть ошибки!
         </div>

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { Student } from "../student";
 
 @Component({
@@ -8,10 +9,13 @@ import { Student } from "../student";
     styleUrls: ["./edit-func.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class EditFuncComponent implements OnInit {
     studentForm: FormGroup;
     isWrite = 0;
     errorSubmit = false;
+
+    constructor(public router: Router) {}
 
     @Input() stud: Student;
     @Input() formEditInput: number;
@@ -88,6 +92,7 @@ export class EditFuncComponent implements OnInit {
                 dob: new Date(control.value.dob),
                 score: control.value.score
             });
+            console.log(this.editEvent);
             this.cEditEvent.emit(
                 this.confirmEdit = 1,
             );

@@ -36,6 +36,7 @@ export class AddFuncComponent extends EditFuncComponent implements OnInit {
             );
             this.errorSubmit = false;
             this.isWrite = 0;
+            this.router.navigate([""]);
             return null;
         }
         this.errorSubmit = true;
@@ -44,6 +45,7 @@ export class AddFuncComponent extends EditFuncComponent implements OnInit {
 
     hideAddition(): number {
         return this.formAddInput;
+
     }
 
     cancel(): void {

@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component, DoCheck, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { AuthService } from "./auth.service";
 import { Student } from "./student";
+
 
 @Component({
     selector: "app-root",
@@ -8,7 +12,7 @@ import { Student } from "./student";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit, DoCheck {
     confirmEdit: number;
     formEdit: number;
     confirmAdd: number;
@@ -27,6 +31,15 @@ export class AppComponent {
     addedStudent: Student;
     initialEditedStudent: Student;
     editedStudent: Student;
+    comeForm: FormGroup;
+    errorSubmit: boolean = false;
+    log: number = 0;
+    reg: number = 0;
+    date = new Date();
+
+    constructor(public authS: AuthService, public router: Router) {
+    }
+
     students: Student[] = [
         {
             sname: "Иванова",
@@ -72,6 +85,98 @@ export class AppComponent {
         },
     ];
 
+    ngOnInit(): void {
+        this.comeForm = new FormGroup({
+            email: new FormControl(null, [Validators.required, Validators.email]),
+            password: new FormControl(null, [Validators.required, Validators.pattern(/^[A-z].*$/)]),
+            passConf: new FormControl("", [Validators.required, this.passValidator])
+        });
+    }
+
+
+    public passValidator = (control: FormControl) => {
+        if (this.comeForm) {
+            if (control.value !== this.comeForm.value.password) {
+                return { passInvalid: true };
+            }
+            return null;
+        }
+    };
+
+    valide(control: string): boolean {
+        const contr = this.comeForm.controls[control];
+        const result = contr.invalid && contr.touched;
+        return result;
+    }
+
+    ngDoCheck(): void {
+        if (this.router.url === "/add") {
+            this.formAdd = 1;
+        }
+    }
+
+    blockReg(): void {
+        document.getElementById("log").style.display = "none";
+        document.getElementById("reg").style.display = "none";
+        this.errorSubmit = false;
+        this.log = 1;
+    }
+
+    blockAuth(): void {
+        document.getElementById("log").style.display = "none";
+        document.getElementById("reg").style.display = "none";
+        this.errorSubmit = false;
+        this.reg = 1;
+    }
+
+    auth(): number {
+        return this.log;
+    }
+
+    end(): number {
+        return this.reg;
+    }
+
+    checku(control: FormControl): void {
+        this.errorSubmit = false;
+        if (control.valid) {
+            this.authS.registerUser(control.value)
+                .subscribe(
+                    res => {
+                        localStorage.setItem("token", res["token"]);
+                    },
+                    err => console.log(err),
+                );
+            this.reg = 0;
+            this.errorSubmit = false;
+            this.comeForm.reset();
+        }
+        if (!control.valid) {
+            this.errorSubmit = true;
+        }
+    }
+
+    checke(control: FormControl): void {
+        this.comeForm.controls.passConf.setErrors(null);
+        if (control.valid) {
+            this.authS.loginUser(control.value)
+                .subscribe(
+                    res => {
+                        localStorage.setItem("token", res["token"]);
+                    },
+                    err => {
+                        this.backClicked();
+                        console.log("Пользователя не существует!");
+                    },
+                );
+            this.log = 0;
+            this.errorSubmit = false;
+            this.comeForm.reset();
+        }
+        if (!control.valid) {
+            this.errorSubmit = true;
+        }
+    }
 
     cDelete(event: number): void {
         this.confirmDelete = event;
@@ -103,6 +208,14 @@ export class AppComponent {
 
     editOut(event: Student): void {
         this.editedStudent = event;
+    }
+
+    backClicked(): void {
+        document.getElementById("log").style.display = "inline-block";
+        document.getElementById("reg").style.display = "inline-block";
+        this.log = 0;
+        this.reg = 0;
+        this.comeForm.reset();
     }
 
     formatDate(date: Date): string {
@@ -161,18 +274,31 @@ export class AppComponent {
     }
 
     deletionPopup(stud: Student): void {
-        this.deletedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
-        this.formDelete = 1;
+        if (localStorage.token === undefined) {
+            this.router.navigate(["/permission"]);
+        } else {
+            this.deletedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
+            this.formDelete = 1;
+        }
     }
 
     editionPopup(stud: Student): void {
-        this.initialEditedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
-        this.formEdit = 1;
-        this.info = this.initialEditedStudent;
+        if (localStorage.token === undefined) {
+            this.router.navigate(["/permission"]);
+        } else {
+            this.initialEditedStudent = new Student(stud.sname, stud.fname, stud.mname, stud.dob, stud.score);
+            this.formEdit = 1;
+            this.info = this.initialEditedStudent;
+        }
     }
 
     additionPopup(): void {
-        this.formAdd = 1;
+        if (localStorage.token === undefined) {
+            this.router.navigate(["/permission"]);
+        } else {
+            this.router.navigate(["/add"]);
+            this.formAdd = 1;
+        }
     }
 
     checkAll(): number {

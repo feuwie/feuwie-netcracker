@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { DeletionFuncRoutingModule } from "./deletion-func-routing.module";
 import { DeletionFuncComponent } from "./deletion-func.component";
 
 @NgModule({
@@ -11,6 +12,7 @@ import { DeletionFuncComponent } from "./deletion-func.component";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    DeletionFuncRoutingModule,
   ],
   exports: [DeletionFuncComponent]
 })

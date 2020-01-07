@@ -1,7 +1,7 @@
 <div class="deletion" *ngIf="hideDeletion()">
     <p class="deletion__confirm">Требуется подтверждение</p>
     <div class="deletion__actions">
-        <button class="deletion__actions-submit" (click)="submit()">Удалить</button>
-        <button class="deletion__actions-cancel" (click)="cancel()">Отмена</button>
+        <button class="deletion__actions-submit" (click)="submit()" routerLink="">Удалить</button>
+        <button class="deletion__actions-cancel" (click)="cancel()" routerLink="">Отмена</button>
     </div>
 </div>

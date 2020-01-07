@@ -58,7 +58,7 @@
             </tr>
         </thead>
         <tbody class="main__table-content">
-            <tr highLight class="main__table-content-row" *ngFor="let stud of students"
+            <tr highLight class="main__table-content-row" *ngFor="let stud of students, let i = index"
                 [ngClass]="searchSt(stud.sname, stud.fname) ? 'names' : searchSc(stud.score) ? 'scores' : ''">
                 <ng-container *ngIf="filterScoreF(stud.score)">
                     <ng-container *ngIf="filterDOBF(stud.dob)">
@@ -80,7 +80,68 @@
             </tr>
         </tbody>
     </table>
-    <div class="main__add"><input type="button" (click)="additionPopup()" value="Добавить студента"></div>
+    <div class="main__add"><input type="button" (click)="additionPopup()" value="Добавить студента">
+    </div>
+</div>
+<div class="auth">
+    <p *ngIf="!authS.loggedIn()">Авторизация пользователя</p>
+    <button routerLink="/login" routerLinkActive="active" *ngIf="!authS.loggedIn()" (click)="blockReg()"
+        id="log">Войти</button>
+    <button routerLink="/register" class="button" routerLinkActive="active" *ngIf="!authS.loggedIn()"
+        (click)="blockAuth()" id="reg">Регистрация</button>
+    <div class="success" *ngIf="authS.loggedIn()">Вы успешно авторизовались!</div>
+    <button class="button" *ngIf="authS.loggedIn()" (click)="authS.logoutUser()">Выйти</button>
+    <form [formGroup]="comeForm" *ngIf="auth()" (submit)="checke(comeForm)">
+        <div class="hea">Авторизация:</div>
+        <div>
+            <label for="email">Email:<br></label>
+            <input type="text" id="email" formControlName="email" />
+            <div class="warning" *ngIf="valide('email')">
+                Неправильно введен email адрес.
+            </div>
+        </div>
+        <div>
+            <label for="password">Пароль:<br></label>
+            <input type="text" id="password" formControlName="password" />
+            <div class="warning" *ngIf="valide('password')">
+                Неправильно введен пароль.
+            </div>
+        </div>
+        <button type="submit">Отправить</button>
+        <button (click)="backClicked()">Назад</button>
+        <div class="warning" *ngIf="errorSubmit">
+            Поля не заполнены или есть ошибки!
+        </div>
+    </form>
+    <form [formGroup]="comeForm" *ngIf="end()" (submit)="checku(comeForm)">
+        <div class="hea">Регистрация:</div>
+        <div>
+            <label for="email">Email:<br></label>
+            <input type="text" id="email" formControlName="email" />
+            <div class="warning" *ngIf="valide('email')">
+                Неправильно введен email адрес.
+            </div>
+        </div>
+        <div>
+            <label for="password">Пароль:<br></label>
+            <input type="text" id="password" formControlName="password" />
+            <div class="warning" *ngIf="valide('password')">
+                Неправильно введен пароль.
+            </div>
+        </div>
+        <div>
+            <label for="passConf">Подтвердите пароль:<br></label>
+            <input type="text" id="passConf" formControlName="passConf" />
+            <div class="warning" *ngIf="valide('passConf')">
+                Пароли не совпадают.
+            </div>
+        </div>
+        <button type="submit">Отправить</button>
+        <button (click)="backClicked()">Назад</button>
+        <div class="warning" *ngIf="errorSubmit">
+            Поля не заполнены или есть ошибки!
+        </div>
+    </form>
 </div>
 <app-edit-func [stud]="info" [formEditInput]="formEdit" (editEvent)="editOut($event)" (fEditEvent)="fEdit($event)"
     (cEditEvent)="cEdit($event)"></app-edit-func>
@@ -88,3 +149,4 @@
 </app-deletion-func>
 <app-add-func [formAddInput]="formAdd" (addEvent)="addOut($event)" (fAddEvent)="fAdd($event)"
     (cAddEvent)="cAdd($event)"></app-add-func>
+<router-outlet></router-outlet>
